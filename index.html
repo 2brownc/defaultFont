@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Default Font Information</title>
+
+<style>
+/* https://github.com/xz/new.css */
+
+:root{
+	--nc-bg-2: #F6F8FA;
+	--nc-bg-3: #E5E7EB;
+}
+
+body {
+
+	margin: 0 auto;
+	max-width: 750px;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%
+}
+
+td,
+th {
+	border: 1px solid var(--nc-bg-3);
+	text-align: left;
+	padding: .5rem;
+}
+
+th {
+	background: var(--nc-bg-2);
+}
+
+tr:nth-child(even) {
+	/* Set every other cell slightly darker. Improves readability. */
+	background: var(--nc-bg-2);
+}
+/*  */table {
+	/* border-collapse sets the table's elements to share borders, rather than floating as separate "boxes". */
+	border-collapse: collapse;
+	width: 100%
+}
+
+td,
+th {
+	border: 1px solid var(--nc-bg-3);
+	text-align: left;
+	padding: .5rem;
+}
+
+th {
+	background: var(--nc-bg-2);
+}
+
+tr:nth-child(even) {
+	/* Set every other cell slightly darker. Improves readability. */
+	background: var(--nc-bg-2);
+}
+
+/* hide info sections untill ready*/
+.hide {
+  visibility: hidden;
+}
+</style>
+
+  </head>
+  <body>
+    <h1>Default Font Information</h1>
+    <div>
+      This website will display the font being used by your browser. It will also display the style information related to the text. Make sure your browser is set to use the default or system font.
+    </div>
+
+    <section id="sampleTextSection">
+      <h3>Sample Text</h3>
+      <div id="sampleText">
+        I have lived to see strange days. Long we have tended our beasts and our fields, built our houses, wrought our tools, or ridden away to help in the wars of Minas Tirith. And that we called the life of Men, the way of the world. We cared little for what lay beyond the borders of our land. Songs we have that tell of these things, but we are forgetting them, teaching them only to children, as a careless custom. And now the songs have come down among us out of strange places, and walk visible under the Sun. — "The Two Towers" by J. R. R. Tolkien.
+      <div>
+    </section>
+
+    <section id="loading">
+      <h4>Loading...</h4>
+    </section>
+
+    <section id="textMainInfoSection" class="hide">
+    <h3>Sample Text Font - Important Information</h3>
+    <div>
+      <table id="mainInfoTable">
+        <thead>
+          <tr>
+            <th>
+              Property
+            </th>
+            <th>
+              Value
+            </th>
+          </tr>
+        </thead>
+        <tbody id="mainInfoTableBody">
+        </tbody>
+        </table>
+    </div>
+    </section>
+
+    <section id="textInfoSection"  class="hide">
+    <h3>Sample Text Font - All Information</h3>
+    <div>
+      <table id="infoTable">
+        <thead>
+          <tr>
+            <th>
+              Property
+            </th>
+            <th>
+              Value
+            </th>
+          </tr>
+        </thead>
+        <tbody id="infoTableBody">
+        </tbody>
+        </table>
+    </div>
+    </section>
+    <script>
+     function getFontInfo(){
+        const importantProperties = [
+          'font-family',
+          'font-size',
+          'font-style',
+          'font-weight',
+          'font-variant',
+          'font-optical-sizing',
+          'color',
+          'line-height',
+          'text-align'
+        ]
+        const elementId = "sampleText";
+        const sampleTextElement = document.getElementById(elementId);
+        const fontFamily = sampleTextElement.style.family;
+        const fontSize = sampleTextElement.style.size;
+
+        const textStyles = window.getComputedStyle(sampleTextElement);
+
+        for(const property of textStyles){
+          if (importantProperties.includes(property)){
+            const value = textStyles.getPropertyValue(property);
+            const infoTableBodyElem = document.getElementById("mainInfoTableBody");
+            const rowElem = document.createElement("tr");
+            const propertyElem = document.createElement("td");
+            const valueElem = document.createElement("td");
+
+            propertyElem.innerText = property;
+            valueElem.innerText = value;
+
+            rowElem.appendChild(propertyElem);
+            rowElem.appendChild(valueElem);
+
+            infoTableBodyElem.appendChild(rowElem);
+          }
+        }
+
+        for(const property of textStyles){
+          const value = textStyles.getPropertyValue(property);
+          const infoTableBodyElem = document.getElementById("infoTableBody");
+          const rowElem = document.createElement("tr");
+          const propertyElem = document.createElement("td");
+          const valueElem = document.createElement("td");
+
+          propertyElem.innerText = property;
+          valueElem.innerText = value;
+
+          rowElem.appendChild(propertyElem);
+          rowElem.appendChild(valueElem);
+
+          infoTableBodyElem.appendChild(rowElem);
+        }
+
+        //remove loading animation
+        document.getElementById("loading").innerHTML = "";
+
+        //show info tables
+        document.getElementById("textMainInfoSection").classList.remove("hide");
+        document.getElementById("textInfoSection").classList.remove("hide");
+
+      }
+
+      setTimeout(getFontInfo, 1000);
+    </script>
+  </body>
+</html>
